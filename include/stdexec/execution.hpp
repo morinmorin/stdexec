@@ -4277,6 +4277,15 @@ namespace stdexec {
         : __data_()
         , __state2_(connect(schedule(__sched), __receiver2_t{this})) {
       }
+
+      __state(__state const& __other) {
+        __data_ = __other.__data_;
+        __state2_ = __other.__state2_;
+
+        if (&__other == __other.__state2_.recv_.__state_) {
+          __state2_.recv_.__state_ = this;
+        }
+      }
     };
 
     struct schedule_from_t {
